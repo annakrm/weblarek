@@ -12,7 +12,7 @@ import { API_URL } from "./utils/constants";
 // Проверка модели 1: Products
 const productsModel = new Products();
 
-// Сохранение моковых данные
+// Сохранение моковых данных
 productsModel.setItems(apiProducts.items);
 console.log("Массив товаров из каталога:", productsModel.getItems());
 
@@ -39,7 +39,10 @@ console.log("Количество товаров:", basketModel.getCount());
 console.log("Общая стоимость товаров:", basketModel.getTotalPrice());
 
 // Проверка, есть ли в наличии товар по id
-console.log(basketModel.hasItem(apiProducts.items[0].id));
+console.log(
+  "Товар есть в корзине:",
+  basketModel.hasItem(apiProducts.items[0].id),
+);
 
 // Удаление товара
 basketModel.removeItem(apiProducts.items[0]);
@@ -53,37 +56,30 @@ console.log("Количество после очистки:", basketModel.getCo
 
 // Проверка модели 3: Buyer
 const buyerModel = new Buyer();
+let errors = buyerModel.validate();
 
 // Проверка валидацию пустых данных, получение ошибок
-console.log("Результат валидации:", buyerModel.validate());
-console.log("Ошибки валидации:", buyerModel.getErrors());
+console.log("Ошибки валидации (пустая форма):", errors);
+console.log("Форма валидна:", Object.keys(errors).length === 0);
 
 // Заполнение части данных
 buyerModel.setPayment("card");
 buyerModel.setAddress("г. Иваново, пр. Текстильщиков, д. 1");
-
 console.log("Данные после частичного заполнения:", buyerModel.getBuyerData());
 
-// Проверка валидации
-console.log(
-  "Результат валидации после частичного заполнения:",
-  buyerModel.validate(),
-);
-console.log(
-  "Ошибки валидации, должны остаться только для email и phone:",
-  buyerModel.getErrors(),
-);
+// Проверка после частичного заполнения
+errors = buyerModel.validate();
+console.log("Ошибки валидации (после частичного заполнения):", errors);
+console.log("Форма валидна:", Object.keys(errors).length === 0);
 
 // Заполнение оставшихся полей
 buyerModel.setEmail("test@test.com");
 buyerModel.setPhone("+79123456789");
 
 // Проверка валидации полностью заполненных данных
-console.log("Результат валидации:", buyerModel.validate());
-console.log(
-  "Ошибки валидации, так как их нет -  то должен вернуться пустой объект:",
-  buyerModel.getErrors(),
-);
+errors = buyerModel.validate();
+console.log("Ошибки валидации (все поля заполнены):", errors);
+console.log("Форма валидна:", Object.keys(errors).length === 0);
 
 // Проверка очистки данных покупателя
 buyerModel.clearBuyerData();
