@@ -145,14 +145,14 @@ price: number | null;
 Тип видов оплаты:
 
 ```
-type TPayment = "card" | "cash" | "";
+type TPayment = "card" | "cash";
 ```
 
 Данные покупателя:
 
 ```
 interface IBuyer {
-payment: TPayment;
+payment: TPayment | null;
 email: string;
 phone: string;
 address: string;
@@ -186,6 +186,12 @@ total: number;
 }
 ```
 
+Тип для ошибок валидации полей покупателя:
+
+```
+export type TFormErrors = Partial<Record<keyof IBuyer, string>>;
+```
+
 ### Классы слоя «Модели»
 
 #### Класс Products
@@ -194,9 +200,9 @@ total: number;
 
 Поля класса:
 
-`protected \_items: IProduct[]` - поле для хранения массива всех товаров,
+`protected items: IProduct[]` - поле для хранения массива всех товаров,
 
-`protected \_selectedItem: string | null` - поле для хранения ID товара, выбранного для подробного просмотра.
+`protected selectedItem: IProduct | null` - поле для хранения объекта товара, выбранного для подробного просмотра.
 
 Методы класса:
 
@@ -204,9 +210,9 @@ total: number;
 
 `getItems(): IProduct[]` - возвращает массив товаров,
 
-`getItem(id: string): IProduct | undefined` - находит и возвращает товар по его ID,
+`getItem(id: string): IProduct | undefined` - находит и возвращает товар по его id,
 
-`setSelectedItem(cardId: string | null): void` - устанавливает ID выбранного товара,
+`setSelectedItem(cardId: string | null): void` - находит и сохраняет выбранный товар по его id,
 
 `getSelectedItem(): IProduct | null` - возвращает выбранный товар.
 
@@ -216,7 +222,7 @@ total: number;
 
 Поля класса:
 
-`protected \_items: IProduct[]` - поле для хранения массива товаров, выбранных покупателем для покупки.
+`protected items: IProduct[]` - поле для хранения массива товаров, выбранных покупателем для покупки.
 
 Методы класса:
 
@@ -240,9 +246,7 @@ total: number;
 
 Поля класса:
 
-`protected \_buyerData: IBuyer` - объект с данными покупателя (способ оплаты, адрес, email, телефон),
-
-`protected \_formErrors: Record<string, string>` - объект ошибок валидации полей формы.
+`protected buyerData: IBuyer` - объект с данными покупателя (способ оплаты, адрес, email, телефон)
 
 Методы класса:
 
@@ -258,9 +262,7 @@ total: number;
 
 `clearBuyerData(): void` — сбрасывает данные покупателя и ошибки,
 
-`validate(): boolean` — проверяет заполненность обязательных полей и формирует объект ошибок,
-
-`getErrors(): Record<string, string>` — возвращает ошибки валидации.
+`validate(): TFormErrors` — проверяет заполненность обязательных полей, возвращает объект ошибок валидации.
 
 ### Класс коммуникационного слоя
 

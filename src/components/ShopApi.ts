@@ -6,17 +6,17 @@ import {
 } from "../types";
 
 export class ShopApi {
-  base: IApi;
+  protected base: IApi;
 
   constructor(baseApi: IApi) {
     this.base = baseApi;
   }
 
-  async getProductList(): Promise<IProductListResponse> {
-    return await this.base.get<IProductListResponse>("/product/");
+  getProductList(): Promise<IProductListResponse> {
+    return this.base.get<IProductListResponse>("/product/");
   }
 
-  async orderProducts(order: IOrderRequest): Promise<IOrderResult> {
-    return await this.base.post<IOrderResult>("/order/", order);
+  orderProducts(order: IOrderRequest): Promise<IOrderResult> {
+    return this.base.post<IOrderResult>("/order/", order);
   }
 }
