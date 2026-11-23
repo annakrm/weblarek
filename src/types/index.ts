@@ -1,3 +1,5 @@
+import { categoryMap } from "../utils/constants";
+
 export type ApiPostMethods = "POST" | "PUT" | "DELETE";
 
 export interface IApi {
@@ -42,3 +44,5 @@ export interface IOrderResult {
 }
 
 export type TFormErrors = Partial<Record<keyof IBuyer, string>>;
+
+export type CategoryKey = keyof typeof categoryMap;
