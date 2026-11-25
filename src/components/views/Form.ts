@@ -1,3 +1,4 @@
+import { TFormChangeEvent } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { IEvents } from "../base/Events";
@@ -26,9 +27,26 @@ export abstract class Form<T extends IForm> extends Component<T> {
       this.container,
     );
 
+    this.container.addEventListener("input", (event) => {
+      if (!(event.target instanceof HTMLInputElement)) {
+        return;
+      }
+
+      const { name, value } = event.target;
+      if (name === "address" || name === "email" || name === "phone") {
+        this.events.emit<TFormChangeEvent>("form:changed", {
+          field: name,
+          value,
+        });
+      }
+    });
+
     this.container.addEventListener("submit", (event) => {
       event.preventDefault();
-      this.events.emit("form:submit");
+      const formName = this.container.getAttribute("name");
+      if (formName) {
+        this.events.emit(`${formName}:submitted`);
+      }
     });
   }
   protected set valid(value: boolean) {

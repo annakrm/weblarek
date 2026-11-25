@@ -56,16 +56,16 @@ export class Buyer {
     const errors: TFormErrors = {};
 
     if (!this.buyerData.payment) {
-      errors.payment = "Не выбран вид оплаты";
+      errors.payment = "выберите вид оплаты";
     }
     if (!this.buyerData.address.trim()) {
-      errors.address = "Не указан адрес";
+      errors.address = "укажите адрес";
     }
     if (!this.buyerData.email.trim()) {
-      errors.email = "Не указан email";
+      errors.email = "укажите email";
     }
     if (!this.buyerData.phone.trim()) {
-      errors.phone = "Не указан телефон";
+      errors.phone = "укажите телефон";
     }
 
     return errors;

@@ -27,7 +27,7 @@ export class Success extends Component<ISuccess> {
     );
 
     this.closeButton.addEventListener("click", () => {
-      this.events.emit("success:close");
+      this.events.emit("success:close-clicked");
     });
   }
 

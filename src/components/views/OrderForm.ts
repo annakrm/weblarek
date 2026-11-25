@@ -35,14 +35,6 @@ export class OrderForm extends Form<IOrderForm> {
         });
       });
     });
-
-    // Поле адреса
-    this.addressInput.addEventListener("input", () => {
-      this.events.emit("form:changed", {
-        field: "address",
-        value: this.addressInput.value,
-      });
-    });
   }
 
   protected set payment(value: TPayment | null) {

@@ -1,22 +1,16 @@
-import { CategoryKey, IProduct } from "../../types";
-import { categoryMap } from "../../utils/constants";
 import { ensureElement } from "../../utils/utils";
-import { Card } from "./Card";
 import { IEvents } from "../base/Events";
+import { CardMedia, ICardMedia } from "./CardMedia";
 
-export interface ICardPreview extends Pick<
-  IProduct,
-  "image" | "category" | "description"
-> {
+export interface ICardPreview extends ICardMedia {
+  description: string;
   buttonText: string;
   buttonDisabled: boolean;
 }
 
-// 1-ый дочерний класс от Card — карточка товара подробная в модальном окне
-export class CardPreview extends Card<ICardPreview> {
+// Дочерний класс от CardMedia — подробная карточка товара в модальном окне
+export class CardPreview extends CardMedia<ICardPreview> {
   protected cardButton: HTMLButtonElement;
-  protected imageElement: HTMLImageElement;
-  protected categoryElement: HTMLElement;
   protected descriptionElement: HTMLElement;
 
   constructor(
@@ -29,17 +23,6 @@ export class CardPreview extends Card<ICardPreview> {
       ".card__button",
       this.container,
     );
-
-    this.categoryElement = ensureElement<HTMLElement>(
-      ".card__category",
-      this.container,
-    );
-
-    this.imageElement = ensureElement<HTMLImageElement>(
-      ".card__image",
-      this.container,
-    );
-
     this.descriptionElement = ensureElement<HTMLElement>(
       ".card__text",
       this.container,
@@ -47,23 +30,8 @@ export class CardPreview extends Card<ICardPreview> {
 
     this.cardButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      this.events.emit("preview:toggle-basket");
+      this.events.emit("preview:button-clicked");
     });
-  }
-
-  protected set category(value: string) {
-    this.categoryElement.textContent = value;
-
-    for (const key in categoryMap) {
-      this.categoryElement.classList.toggle(
-        categoryMap[key as CategoryKey],
-        key === value,
-      );
-    }
-  }
-
-  protected set image(value: string) {
-    this.setImage(this.imageElement, value, this.title);
   }
 
   protected set description(value: string) {
