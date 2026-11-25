@@ -5,13 +5,13 @@ import { IEvents } from "../base/Events";
 export interface IBasket {
   items: HTMLElement[];
   total: number;
+  orderButtonDisabled: boolean;
 }
 
 export class Basket extends Component<IBasket> {
   protected listElement: HTMLElement;
   protected totalElement: HTMLElement;
   protected orderButton: HTMLButtonElement;
-  protected emptyElement: HTMLElement;
 
   constructor(
     protected events: IEvents,
@@ -32,21 +32,17 @@ export class Basket extends Component<IBasket> {
       this.container,
     );
 
-    this.emptyElement = document.createElement("p");
-    this.emptyElement.textContent = "Корзина пуста";
-
     this.orderButton.addEventListener("click", () => {
-      this.events.emit("basket:order");
+      this.events.emit("basket:order-clicked");
     });
   }
 
   protected set items(items: HTMLElement[]) {
-    this.orderButton.disabled = items.length === 0;
-    if (items.length > 0) {
-      this.listElement.replaceChildren(...items);
-    } else {
-      this.listElement.replaceChildren(this.emptyElement);
-    }
+    this.listElement.replaceChildren(...items);
+  }
+
+  protected set orderButtonDisabled(value: boolean) {
+    this.orderButton.disabled = value;
   }
 
   protected set total(value: number) {

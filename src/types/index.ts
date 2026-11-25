@@ -46,3 +46,13 @@ export interface IOrderResult {
 export type TFormErrors = Partial<Record<keyof IBuyer, string>>;
 
 export type CategoryKey = keyof typeof categoryMap;
+
+export interface ICardActions {
+  onClick: () => void;
+}
+
+export type TFormChangeEvent =
+  | { field: "payment"; value: TPayment }
+  | { field: "address"; value: string }
+  | { field: "email"; value: string }
+  | { field: "phone"; value: string };

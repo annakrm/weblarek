@@ -1,3 +1,4 @@
+import { ICardActions } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { Card } from "./Card";
 
@@ -5,16 +6,12 @@ export interface ICardBasket {
   index: number;
 }
 
-export interface ICardBasketActions {
-  onClick: () => void;
-}
-
 // 3-ий дочерний класс от Card — карточка товара в корзине
 export class CardBasket extends Card<ICardBasket> {
   protected deleteButton: HTMLButtonElement;
   protected indexElement: HTMLElement;
 
-  constructor(container: HTMLElement, actions?: ICardBasketActions) {
+  constructor(container: HTMLElement, actions?: ICardActions) {
     super(container);
 
     this.deleteButton = ensureElement<HTMLButtonElement>(

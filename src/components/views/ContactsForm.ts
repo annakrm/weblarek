@@ -24,22 +24,6 @@ export class ContactsForm extends Form<IContactsForm> {
       'input[name="phone"]',
       this.container,
     );
-
-    // Поле email
-    this.emailInput.addEventListener("input", () => {
-      this.events.emit("form:changed", {
-        field: "email",
-        value: this.emailInput.value,
-      });
-    });
-
-    // Поле телефона
-    this.phoneInput.addEventListener("input", () => {
-      this.events.emit("form:changed", {
-        field: "phone",
-        value: this.phoneInput.value,
-      });
-    });
   }
 
   protected set email(value: string) {
