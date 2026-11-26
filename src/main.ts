@@ -288,7 +288,4 @@ shopApi
   })
   .catch((err) => {
     console.error("Ошибка при загрузке каталога:", err);
-    const errorEl = document.createElement("p");
-    errorEl.textContent = "Не удалось загрузить каталог товаров.";
-    gallery.render({ items: [errorEl] });
   });

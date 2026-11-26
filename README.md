@@ -406,15 +406,13 @@ export type TFormChangeEvent =
 
 `protected categoryElement: HTMLElement` — элемент категории товара
 
-`protected altText: string` — альтернативный текст изображения товара
-
 Методы класса:
 
 `protected set category(value: string)` — задаёт текст категории и переключает классы по `categoryMap`
 
-`protected set image(value: string)` — задаёт путь к изображению с учётом сохранённого альтернативного текста
+`protected set image(value: string)` — задаёт путь к изображению через `setImage`
 
-`protected set alt(value: string)` — сохраняет альтернативный текст изображения и обновляет атрибут `alt` у изображения.
+`protected set alt(value: string)` — задаёт атрибут `alt` у изображения товара.
 
 #### Класс CardCatalog
 
@@ -426,7 +424,7 @@ export type TFormChangeEvent =
 
 Поля класса:
 
-Наследует `imageElement`, `categoryElement`, `altText` от `CardMedia` и базовые поля от `Card`.
+Наследует `imageElement`, `categoryElement` от `CardMedia` и базовые поля от `Card`.
 
 Методы класса:
 
@@ -446,7 +444,7 @@ export type TFormChangeEvent =
 
 `protected descriptionElement: HTMLElement` — элемент описания товара
 
-Поля `imageElement`, `categoryElement`, `altText` наследуются от `CardMedia`, а базовые поля — от `Card`.
+Поля `imageElement`, `categoryElement` наследуются от `CardMedia`, а базовые поля — от `Card`.
 
 Методы класса:
 

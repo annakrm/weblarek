@@ -1,4 +1,4 @@
-import { IBuyer, TPayment } from "../../types";
+import { IBuyer, TFormChangeEvent, TPayment } from "../../types";
 import { ensureAllElements, ensureElement } from "../../utils/utils";
 import { IEvents } from "../base/Events";
 import { Form, IForm } from "./Form";
@@ -29,10 +29,12 @@ export class OrderForm extends Form<IOrderForm> {
     // Кнопки выбора оплаты
     this.paymentButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        this.events.emit("form:changed", {
-          field: "payment",
-          value: button.name,
-        });
+        if (button.name === "card" || button.name === "cash") {
+          this.events.emit<TFormChangeEvent>("form:changed", {
+            field: "payment",
+            value: button.name,
+          });
+        }
       });
     });
   }

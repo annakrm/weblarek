@@ -11,7 +11,6 @@ export interface ICardMedia extends Pick<IProduct, "image" | "category"> {
 export abstract class CardMedia<T extends ICardMedia> extends Card<T> {
   protected imageElement: HTMLImageElement;
   protected categoryElement: HTMLElement;
-  protected altText: string = "";
 
   constructor(container: HTMLElement) {
     super(container);
@@ -38,11 +37,10 @@ export abstract class CardMedia<T extends ICardMedia> extends Card<T> {
   }
 
   protected set alt(value: string) {
-    this.altText = value;
     this.imageElement.alt = value;
   }
 
   protected set image(value: string) {
-    this.setImage(this.imageElement, value, this.altText);
+    this.setImage(this.imageElement, value);
   }
 }
